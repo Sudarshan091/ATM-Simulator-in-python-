@@ -1,26 +1,56 @@
-# The ATM Simulator
-print('welcome to HDFC Bank ATM')
-bank_balance =5000
+def show_balance(balance):
+    print(f"\n💰 Your balance is: ₹{balance}\n")
 
-while True:
-    option=input("enter options(1,2,3,4) like \n1 for showing bank balance: \n2 for deposit money in your account: \n3 for withdraw money from your account: \n4 for exit:\n now enter your option:")
-    if option=='1':
-        print(f'your balance is: {bank_balance}')
-    elif option=='2':
-        deposit=int(input('enter the deposit amount:'))
-        bank_balance+=deposit
-        print(f'your balance is {bank_balance}')
-    elif option=='3':
-        withdraw=int(input('enter the withdraw amount:'))
-        if withdraw<=bank_balance:
-            bank_balance-=withdraw
-            print(f'your balance is {bank_balance}:')
+
+def deposit_money(balance):
+    try:
+        amount = int(input("Enter deposit amount: "))
+        if amount <= 0:
+            print("❌ Amount must be positive")
+            return balance
+        balance += amount
+        print("✅ Deposit successful")
+        return balance
+    except ValueError:
+        print("❌ Invalid input")
+        return balance
+
+
+def withdraw_money(balance):
+    try:
+        amount = int(input("Enter withdrawal amount: "))
+        if amount <= 0:
+            print("❌ Amount must be positive")
+        elif amount > balance:
+            print("❌ Insufficient balance")
         else:
-            print('insufficient balance')
-    
-    elif option=='4':
-        print('thankyou for visisting our bank')
-        break
-        
-    else:
-        print('invalid option please try again ')
+            balance -= amount
+            print("✅ Withdrawal successful")
+        return balance
+    except ValueError:
+        print("❌ Invalid input")
+        return balance
+
+
+def atm():
+    balance = 5000
+    print("🏦 Welcome to HDFC ATM")
+
+    while True:
+        print("\n1. Check Balance\n2. Deposit\n3. Withdraw\n4. Exit")
+        choice = input("Choose option: ")
+
+        if choice == '1':
+            show_balance(balance)
+        elif choice == '2':
+            balance = deposit_money(balance)
+        elif choice == '3':
+            balance = withdraw_money(balance)
+        elif choice == '4':
+            print("🙏 Thank you for visiting")
+            break
+        else:
+            print("❌ Invalid option")
+
+
+atm()
